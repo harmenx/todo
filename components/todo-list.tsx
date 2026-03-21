@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -23,6 +23,7 @@ export function TodoList({ owner, title, todos, icon, onTodoChanged }: TodoListP
   const [newTodo, setNewTodo] = useState("")
   const [isAdding, setIsAdding] = useState(false)
   const [isClearing, setIsClearing] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   // Count tasks completed today (in NZ timezone)
   const getNZDate = () => {
@@ -55,6 +56,7 @@ export function TodoList({ owner, title, todos, icon, onTodoChanged }: TodoListP
       setNewTodo(todoText)
     } finally {
       setIsAdding(false)
+      setTimeout(() => inputRef.current?.focus(), 0)
     }
   }
 
@@ -85,6 +87,7 @@ export function TodoList({ owner, title, todos, icon, onTodoChanged }: TodoListP
       <form onSubmit={handleAddTodo} className="mb-6">
         <div className="flex gap-2">
           <Input
+            ref={inputRef}
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             placeholder="Add a new task..."
