@@ -88,7 +88,6 @@ export function TodoList({ owner, title, todos, icon, onTodoChanged }: TodoListP
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             placeholder="Add a new task..."
-            disabled={isAdding}
             className="flex-1"
           />
           <Button type="submit" disabled={isAdding || !newTodo.trim()} size="icon">
